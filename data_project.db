@@ -1,0 +1,17 @@
+SELECT 
+     c.age,
+     c.education,
+     cp.has_deposits,
+     (Max(balance) - MIN(balance)) AS difference,
+     c.job,
+     outcome
+    
+FROM inv_campaign_eval ic
+LEFT JOIN client c
+    ON ic.client_id = c.client_id
+JOIN client_products cp
+    ON ic.client_id = cp.client_id
+JOIN balances b
+    ON ic.client_id = b.client_id
+GROUP BY ic.client_id
+ORDER BY c.age
